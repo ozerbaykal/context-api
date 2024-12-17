@@ -3,9 +3,11 @@ import React, {useContext} from 'react';
 import {UserContext} from '../context/UserContext';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
+import {useNavigation} from '@react-navigation/native';
 
 const UserListScreen = () => {
   const {users, loading, error} = useContext(UserContext);
+  const navigation = useNavigation();
 
   return (
     <View style={{flex: 1}}>
@@ -18,7 +20,10 @@ const UserListScreen = () => {
           data={users}
           keyExtractor={item => item.id.toString()}
           renderItem={({item}) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('UserDetails', {userId: item.id})
+              }>
               <View style={styles.item}>
                 <Text style={styles.title}>{item.name}</Text>
                 <Text style={styles.subtitle}>{item.email}</Text>
@@ -44,6 +49,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
-  title: {},
-  subtitle: {},
+  title: {
+    fontSize: 18,
+    fontWeight: 'semi-bold',
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 6,
+  },
 });
