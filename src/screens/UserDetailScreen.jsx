@@ -1,8 +1,10 @@
 import {Button, StyleSheet, Text, View} from 'react-native';
 import React, {useContext} from 'react';
 import {UserContext} from '../context/UserContext';
+import {useNavigation} from '@react-navigation/native';
 
 const UserDetailScreen = ({route}) => {
+  const navigation = useNavigation();
   const {userId} = route.params;
   const {users} = useContext(UserContext);
   const user = users.find(user => user.id === userId);
@@ -12,7 +14,10 @@ const UserDetailScreen = ({route}) => {
         <Text style={styles.title}>{user.name}</Text>
         <Text style={styles.info}>{user.email}</Text>
         <Text style={styles.info}>{user.phone}</Text>
-        <Button title="Wiew Tasks" />
+        <Button
+          title="Wiew Tasks"
+          onPress={() => navigation.navigate('Task', {userId})}
+        />
       </View>
     </View>
   );
