@@ -28,10 +28,16 @@ export const TaskProvider = ({ children }) => {
         Alert.alert("Task silindi")
     }
 
+    //dizinin  içindeki en büyük id li elemanı bulur ve ona bir ekler
+    const getNextId = () => {
+        return tasks.length > 0 ? Math.max(...tasks.map(task => task.id)) + 1 : 1;
+    };
+
+
     const addTask = (title) => {
         const newTask = {
             userId: 1,
-            id: tasks.length + 1,
+            id: getNextId(),
             title,
 
         }
